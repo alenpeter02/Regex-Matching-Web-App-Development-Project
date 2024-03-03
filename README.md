@@ -1,5 +1,8 @@
 # Regex-Matching-Web-App-Development-Project
-Regex Matching Web App Development Project and Deploying application on AWS
+Regex Matching Web App Development Project and Deploying Application on AWS
+## Public Link:
+http://18.215.169.16:5000/
+
 ## Features:
 ## 1.	Regex Tester:
 • Users can input a test string and a regular expression pattern.
@@ -18,7 +21,7 @@ JavaScript is used for client-side interactivity, including highlighting regex m
 ## •	Regular Expressions: 
 Regular expressions are used for pattern matching in both the Regex Tester and Email Validator functionalities.
 ## •	HTML/CSS: 
-HTML is used for structuring the web pages, while CSS is used for styling.
+HTML is used for structuring web pages, while CSS is used for styling.
 
 # Deployment:
 ## AWS EC2 (Elastic Compute Cloud):
