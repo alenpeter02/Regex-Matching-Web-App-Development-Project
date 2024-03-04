@@ -6,54 +6,63 @@
     <title>Regex Tester</title>
     <style>
         body {
-            background-color: #34a4bd; /* Change this to your desired background color */
+            background-color: #223944; 
         }
         .fixed {
             position: relative;
             top: 0px;
-            left: 150px;
-            width: 600px; /* adjust width as needed */
+            
+            width: 600px; 
             padding: 10px;
             background-color: #d7d4e0;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 30px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         .fixed h2 {
-            font-size: 24px; /* Increase the font size */
+            font-size: 24px; 
         }
         
         .fixed label {
-            font-size: 16px; /* Increase the font size */
+            font-size: 16px; 
         }
         
         .fixed input[type="text"],
         .fixed textarea {
-            font-size: 16px; /* Increase the font size */
+            font-size: 16px;
             padding: 5px;
             margin-bottom: 10px;
         }
         
         .fixed input[type="submit"] {
-            font-size: 18px; /* Increase the font size */
-            padding: 10px; /* Increase the button size */
+            font-size: 18px; 
+            padding: 10px; 
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
+            font-family: monospace;
         }
         
         .fixed input[type="submit"]:hover {
-            background-color: #0085d2;
+            background-color: #2b2626;
         }
         
+
+        #validate_button:hover {
+        background-color: #2b2626 !important;
+        }
+        
+        
         h1 {
-            text-align: center;
+            text-align: start;
             color: white; 
+            font-size: 40pt;
         }
         body{ margin-left: 1cm;
               font-family: Verdana, Arial, Helvetica, sans-serif;
+              margin-right: 1cm;
         }   
        .container {
             display: flex;
@@ -71,17 +80,30 @@
     </style>
     <script>
         
-        function highlightMatches() {
-        var testString = document.getElementById('test_string').value;
-        var regexPattern = document.getElementById('regex_pattern').value;
-        var highlightedString = testString.replace(new RegExp(regexPattern, 'g'), '<span class="matched">$&</span>');
-        document.getElementById('highlighted_string').innerHTML = highlightedString;
-        }
+            function highlightMatches() {
+            var testString = document.getElementById('test_string').value;
+            var regexPattern = document.getElementById('regex_pattern').value;
+            var matches = testString.match(new RegExp(regexPattern, 'g'));
+            var numMatches = matches ? matches.length : 0;
 
-        function showResults() {
-        highlightMatches(); // Call highlightMatches to highlight matches
-        document.getElementById("results").style.display = "block";
-        }
+            document.getElementById('num_matches').innerText = numMatches;
+            var highlightedString = testString.replace(new RegExp(regexPattern, 'g'), function(match) {
+                return '<span class="matched">' + match + '</span>';
+            });
+            document.getElementById('highlighted_string').innerHTML = highlightedString;
+            }
+            function showResults() {
+            highlightMatches(); 
+            document.getElementById("results").style.display = "block";
+            }
+            function submitForm() {
+            highlightMatches(); 
+            document.getElementById("results").style.display = "block"; 
+            }
+            window.onload = function() {
+            document.getElementById('test_string').value = '';
+            document.getElementById('regex_pattern').value = '';
+            };
     </script>
 </head>
 <body>
@@ -89,7 +111,7 @@
     <div class="fixed">
         <div class="center">
             <h2>Regex Tester</h2>
-            <form action="/results" method="post" onsubmit="showResults();">
+            <form id="test_form" action="/results" method="post" onsubmit="submitForm(); return false;">
                 <label for="test_string">Test String:</label><br>
                 <textarea id="test_string" name="test_string" rows="4" cols="50">{{ test_string }}</textarea><br><br>
                 <label for="regex_pattern">Regular Expression:</label><br>
@@ -98,31 +120,21 @@
             </form>
             <div id="results">
                 <h2>Regex Results</h2> 
-                <h4>Regular Expression:</h4>
-                <p>{{ regex }}</p>
-                <h3>Matches:</h3>
-                <p>Number of Matches: {{ num_matches }}</p>
+                <p>Number of Matches: <span id="num_matches">0</span></p>
                 <div id="highlighted_string"></div>
-                <ul>
-                    {% for match in matches %}
-                        <li>
-                            Match: {{ match['match'] }} (Position: {{ match['position'] }}) <br>
-                            {% set start_index = match['position'] - test_string[:match['position']][::-1].find('.') %}
-                            {{ test_string[start_index:match['position']] }} 
-                            <span class="matched">{{ match['match'] }}</span> 
-                            {% set end_index = test_string.find('.', match['position'] + match['match']|length) %}
-                            {{ test_string[match['position'] + match['match']|length:end_index] }} 
-                        </li>
-                    {% endfor %}
-                </ul>
             </div>
         </div>
-        <div class="fixed" style="position: fixed; top: 120px; left: 875px;">
+        <div class="fixed" style="position: fixed; top: 175px; left: 700px;">
             <h2>Email Validator</h2>
             <form id="email-validation-form">
                 <label for="email">Email:</label><br>
                 <input type="text" id="email" name="email" style = "font-size: 16px;"> <br><br>
-                <button type="button" onclick="validateEmail()" style="font-size: 18px; padding: 10px;background-color: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">Validate</button>
+                <button id="validate_button"  type="button" onclick="validateEmail()" style="font-size: 18px; padding: 10px;
+                                                                       background-color: #4CAF50;  
+                                                                       color: white; border: none; 
+                                                                       border-radius: 10px; 
+                                                                       cursor: pointer;
+                                                                       font-family: monospace;">Validate</button>
             </form>
             <div id="email-validation-result"></div>
         </div>
