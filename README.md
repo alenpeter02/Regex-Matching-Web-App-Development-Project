@@ -1,7 +1,7 @@
 # Regex-Matching-Web-App-Development-Project
 Regex Matching Web App Development Project and Deploying Application on AWS
 ## Public Link:
-http://18.215.169.16:5000/
+http://54.234.27.237:5000/
 
 ## Features:
 ## 1.	Regex Tester:
